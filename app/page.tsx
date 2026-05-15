@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Menu,
   X,
+  Sparkles,
 } from "lucide-react";
 
 // Navigation Component
@@ -36,14 +37,14 @@ function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-sm border-b border-border"
+          ? "glass shadow-elevated"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto max-w-[1200px] px-6 py-4 flex items-center justify-between">
-        <a href="#" className="text-foreground font-medium tracking-tight text-lg">
+        <a href="#" className="text-foreground font-semibold tracking-tight text-lg hover:text-accent transition-colors duration-300">
           Link Design
         </a>
 
@@ -53,7 +54,7 @@ function Navigation() {
             <a
               key={link.href}
               href={link.href}
-              className="text-muted hover:text-foreground transition-colors text-sm"
+              className="text-muted hover:text-foreground transition-all duration-300 text-sm relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
             </a>
@@ -62,14 +63,14 @@ function Navigation() {
 
         <a
           href="#contact"
-          className="hidden md:flex items-center justify-center h-11 px-5 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors"
+          className="hidden md:flex items-center justify-center h-11 px-5 btn-gradient text-white rounded-lg text-sm font-medium shadow-glow-subtle"
         >
           Start a project
         </a>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2"
+          className="md:hidden p-2 text-muted hover:text-foreground transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -83,7 +84,7 @@ function Navigation() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-background border-b border-border px-6 py-4">
+        <div className="md:hidden glass border-t border-border px-6 py-4 shadow-elevated">
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
@@ -97,7 +98,7 @@ function Navigation() {
             ))}
             <a
               href="#contact"
-              className="flex items-center justify-center h-11 px-5 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors mt-2"
+              className="flex items-center justify-center h-11 px-5 btn-gradient text-white rounded-lg text-sm font-medium mt-2 shadow-glow-subtle"
               onClick={() => setMobileMenuOpen(false)}
             >
               Start a project
@@ -112,32 +113,46 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="pt-40 pb-32 md:pt-48 md:pb-40 px-6">
-      <div className="mx-auto max-w-[1200px]">
-        <h1 className="text-5xl md:text-7xl lg:text-[80px] font-medium tracking-[-0.02em] text-foreground leading-[1.05] text-balance">
-          Design, delivered.
+    <section className="relative pt-40 pb-32 md:pt-48 md:pb-40 px-6 hero-gradient noise-overlay overflow-hidden">
+      {/* Floating decorative elements */}
+      <div className="absolute top-32 right-[10%] w-64 h-64 rounded-full bg-accent/5 blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-[5%] w-48 h-48 rounded-full bg-[#a371f7]/5 blur-3xl animate-float animation-delay-300" />
+      
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border mb-8 animate-fade-in-up">
+          <Sparkles className="w-4 h-4 text-accent" />
+          <span className="text-sm text-muted">Design on demand</span>
+        </div>
+        
+        <h1 className="text-5xl md:text-7xl lg:text-[80px] font-semibold tracking-[-0.03em] leading-[1.05] text-balance animate-fade-in-up animation-delay-100">
+          <span className="gradient-text">Design,</span>{" "}
+          <span className="text-foreground">delivered.</span>
         </h1>
-        <p className="mt-6 text-lg md:text-xl text-muted max-w-xl leading-relaxed">
+        
+        <p className="mt-6 text-lg md:text-xl text-muted max-w-xl leading-relaxed animate-fade-in-up animation-delay-200">
           A design partner for marketing teams that move fast. Banners, social,
-          print, HTML5. Usually shipped in 48 hours.
+          print, HTML5. Usually shipped in <span className="text-foreground-secondary font-medium">48 hours</span>.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        
+        <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-in-up animation-delay-300">
           <a
             href="#contact"
-            className="flex items-center justify-center h-12 px-6 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent/90 transition-colors"
+            className="group flex items-center justify-center h-12 px-6 btn-gradient text-white rounded-lg text-sm font-medium shadow-glow"
           >
             Start a project
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
             href="#pricing"
-            className="flex items-center gap-2 text-muted hover:text-foreground transition-colors text-sm font-medium"
+            className="flex items-center gap-2 text-muted hover:text-foreground transition-all duration-300 text-sm font-medium group"
           >
             See pricing
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
-        <p className="mt-12 text-sm text-muted">
-          Trusted by Renault, Dacia, Delfi
+        
+        <p className="mt-12 text-sm text-muted animate-fade-in-up animation-delay-400">
+          Trusted by <span className="text-foreground-secondary">Renault</span>, <span className="text-foreground-secondary">Dacia</span>, <span className="text-foreground-secondary">Delfi</span>
         </p>
       </div>
     </section>
@@ -149,16 +164,17 @@ function LogoStrip() {
   const logos = ["Renault", "Dacia", "Delfi", "Postimees", "Apollo", "ERR"];
 
   return (
-    <section className="py-16 px-6 border-t border-border">
+    <section className="py-16 px-6 border-t border-border bg-background-secondary">
       <div className="mx-auto max-w-[1200px]">
         <p className="text-xs uppercase tracking-wider text-muted mb-8 text-center">
           Working with
         </p>
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          {logos.map((logo) => (
+          {logos.map((logo, index) => (
             <span
               key={logo}
-              className="text-muted/50 font-medium text-lg tracking-tight"
+              className="text-muted/40 font-semibold text-lg tracking-tight hover:text-muted transition-colors duration-300"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               {logo}
             </span>
@@ -172,20 +188,24 @@ function LogoStrip() {
 // Problem/Promise Section
 function ProblemPromise() {
   return (
-    <section className="py-32 md:py-40 px-6 bg-section-bg">
-      <div className="mx-auto max-w-[1200px]">
+    <section className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
         <div className="grid md:grid-cols-2 gap-12 md:gap-20">
           <div>
-            <p className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-[-0.02em] text-foreground leading-snug text-balance">
-              Need a banner by tomorrow. Five sizes. No source files. Sound
-              familiar?
+            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-snug text-balance">
+              Need a banner by tomorrow. Five sizes.{" "}
+              <span className="text-muted">No source files.</span>{" "}
+              Sound familiar?
             </p>
           </div>
           <div className="flex items-center">
-            <p className="text-lg md:text-xl text-muted leading-relaxed">
-              Brief in. Design out. Usually within 48 hours. No long onboarding,
-              no missing files, no chase.
-            </p>
+            <div className="p-6 rounded-xl glass border border-border shadow-elevated hover-lift">
+              <p className="text-lg md:text-xl text-foreground-secondary leading-relaxed">
+                Brief in. Design out. Usually within{" "}
+                <span className="gradient-text font-semibold">48 hours</span>. No long onboarding,
+                no missing files, no chase.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -214,16 +234,20 @@ function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-32 md:py-40 px-6">
-      <div className="mx-auto max-w-[1200px]">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-16">
+    <section id="how-it-works" className="py-32 md:py-40 px-6 section-gradient-alt relative noise-overlay">
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
           How it works
         </h2>
         <div className="grid md:grid-cols-3 gap-12 md:gap-8">
-          {steps.map((step) => (
-            <div key={step.number}>
-              <span className="text-sm text-muted">{step.number}</span>
-              <h3 className="text-xl font-medium text-foreground mt-2 mb-3">
+          {steps.map((step, index) => (
+            <div 
+              key={step.number} 
+              className="group p-6 rounded-xl border border-border bg-background-secondary/50 card-interactive"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <span className="inline-block text-sm text-accent font-mono bg-accent/10 px-3 py-1 rounded-full">{step.number}</span>
+              <h3 className="text-xl font-semibold text-foreground mt-4 mb-3 group-hover:text-accent transition-colors duration-300">
                 {step.title}
               </h3>
               <p className="text-muted leading-relaxed">{step.description}</p>
@@ -271,16 +295,22 @@ function Services() {
   ];
 
   return (
-    <section className="py-32 md:py-40 px-6 bg-section-bg">
-      <div className="mx-auto max-w-[1200px]">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-16">
+    <section className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
           What we do
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {services.map((service) => (
-            <div key={service.title}>
-              <service.icon className="w-6 h-6 text-foreground mb-4" strokeWidth={1.5} />
-              <h3 className="text-lg font-medium text-foreground mb-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => (
+            <div 
+              key={service.title} 
+              className="group p-6 rounded-xl border border-border bg-background/50 card-interactive"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors duration-300">
+                <service.icon className="w-6 h-6 text-accent" strokeWidth={1.5} />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">
                 {service.title}
               </h3>
               <p className="text-muted leading-relaxed">{service.description}</p>
@@ -355,29 +385,30 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-32 md:py-40 px-6">
-      <div className="mx-auto max-w-[1200px]">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-16">
+    <section id="pricing" className="py-32 md:py-40 px-6 section-gradient-alt noise-overlay relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
           Pricing
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tiers.map((tier) => (
+          {tiers.map((tier, index) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col p-6 rounded-xl border ${
+              className={`relative flex flex-col p-6 rounded-xl transition-all duration-300 hover-lift ${
                 tier.highlighted
-                  ? "border-foreground"
-                  : "border-border"
+                  ? "card-highlighted shadow-glow"
+                  : "border border-border bg-background-secondary/50 hover:border-accent/50 hover:shadow-elevated"
               }`}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               {tier.highlighted && (
-                <span className="absolute -top-3 left-6 bg-foreground text-background text-xs font-medium px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-6 bg-gradient-to-r from-accent to-[#a371f7] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-glow-subtle">
                   Most popular
                 </span>
               )}
-              <h3 className="text-lg font-medium text-foreground">{tier.name}</h3>
+              <h3 className="text-lg font-semibold text-foreground">{tier.name}</h3>
               <div className="mt-4 mb-6">
-                <span className="text-4xl font-medium text-foreground tracking-tight">
+                <span className={`text-4xl font-semibold tracking-tight ${tier.highlighted ? 'gradient-text' : 'text-foreground'}`}>
                   {tier.price} €
                 </span>
                 <span className="text-muted ml-2 text-sm">{tier.unit}</span>
@@ -385,17 +416,18 @@ function Pricing() {
               <div className="h-px bg-border mb-6" />
               <ul className="flex-1 space-y-3 mb-8">
                 {tier.features.map((feature) => (
-                  <li key={feature} className="text-sm text-muted leading-relaxed">
+                  <li key={feature} className="text-sm text-muted leading-relaxed flex items-start gap-2">
+                    <span className="text-accent mt-1">•</span>
                     {feature}
                   </li>
                 ))}
               </ul>
               <a
                 href="#contact"
-                className={`flex items-center justify-center h-11 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center justify-center h-11 rounded-lg text-sm font-medium transition-all duration-300 ${
                   tier.highlighted
-                    ? "bg-accent text-white hover:bg-accent/90"
-                    : "border border-border text-foreground hover:bg-section-bg"
+                    ? "btn-gradient text-white shadow-glow-subtle"
+                    : "border border-border text-foreground hover:border-accent hover:text-accent hover:bg-accent/5"
                 }`}
               >
                 {tier.cta}
@@ -405,7 +437,7 @@ function Pricing() {
         </div>
         <p className="mt-8 text-sm text-muted text-center">
           All plans include 1 round of revisions. Need something custom?{" "}
-          <a href="#contact" className="text-foreground hover:underline">
+          <a href="#contact" className="text-accent hover:underline transition-colors">
             {"Let's talk."}
           </a>
         </p>
@@ -432,46 +464,46 @@ function ComparisonTable() {
   ];
 
   return (
-    <section className="pb-32 md:pb-40 px-6">
-      <div className="mx-auto max-w-[1200px]">
+    <section className="pb-32 md:pb-40 px-6 section-gradient-alt relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 text-muted hover:text-foreground transition-colors text-sm"
+          className="group flex items-center gap-2 text-muted hover:text-accent transition-all duration-300 text-sm"
         >
           See full comparison
           <ChevronDown
-            className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
           />
         </button>
 
         {isOpen && (
-          <div className="mt-8 overflow-x-auto">
+          <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-background-secondary/50 shadow-elevated">
             <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-4 pr-4 text-sm font-medium text-foreground">
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">
                     Feature
                   </th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-foreground">
+                  <th className="text-left py-4 px-4 text-sm font-semibold text-foreground">
                     Pay-as-you-go
                   </th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-foreground">
+                  <th className="text-left py-4 px-4 text-sm font-semibold text-foreground">
                     Lite
                   </th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-foreground">
+                  <th className="text-left py-4 px-4 text-sm font-semibold text-accent">
                     Core
                   </th>
-                  <th className="text-left py-4 pl-4 text-sm font-medium text-foreground">
+                  <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">
                     Pro
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <tr key={row.label} className="border-b border-border">
-                    <td className="py-4 pr-4 text-sm text-muted">{row.label}</td>
+                {rows.map((row, index) => (
+                  <tr key={row.label} className={`border-b border-border/50 hover:bg-accent/5 transition-colors ${index === rows.length - 1 ? 'border-b-0' : ''}`}>
+                    <td className="py-4 px-6 text-sm text-muted">{row.label}</td>
                     {row.values.map((value, i) => (
-                      <td key={i} className="py-4 px-4 text-sm text-foreground">
+                      <td key={i} className={`py-4 px-4 text-sm ${i === 2 ? 'text-accent' : 'text-foreground-secondary'}`}>
                         {value}
                       </td>
                     ))}
@@ -498,23 +530,35 @@ function Work() {
   ];
 
   return (
-    <section id="work" className="py-32 md:py-40 px-6 bg-section-bg">
-      <div className="mx-auto max-w-[1200px]">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-16">
+    <section id="work" className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
           Selected work
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group relative aspect-[4/3] bg-border/50 rounded-xl overflow-hidden"
+              className="group relative aspect-[4/3] bg-background-secondary rounded-xl overflow-hidden border border-border card-interactive"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/80 transition-colors duration-200" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <h3 className="text-white font-medium">{project.title}</h3>
-                <p className="text-white/70 text-sm mt-1">
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+                <h3 className="text-foreground font-semibold">{project.title}</h3>
+                <p className="text-muted text-sm mt-1">
                   {project.description}
                 </p>
+              </div>
+              
+              {/* Placeholder grid pattern */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <div className="w-16 h-16 border-2 border-dashed border-muted rounded-lg" />
               </div>
             </div>
           ))}
@@ -527,16 +571,22 @@ function Work() {
 // About Section
 function About() {
   return (
-    <section className="py-32 md:py-40 px-6">
-      <div className="mx-auto max-w-[1200px]">
+    <section className="py-32 md:py-40 px-6 section-gradient-alt noise-overlay relative">
+      <div className="mx-auto max-w-[1200px] relative z-10">
         <div className="grid md:grid-cols-[280px_1fr] gap-12 md:gap-16 items-start">
-          <div className="aspect-square bg-border/50 rounded-xl" />
+          <div className="aspect-square bg-background-secondary rounded-xl border border-border shadow-elevated overflow-hidden relative group">
+            {/* Placeholder with gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-[#a371f7]/10" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full border-2 border-dashed border-muted/30" />
+            </div>
+          </div>
           <div>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-6">
-              {"Hi, I'm Deniss."}
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-6">
+              {"Hi, I'm"} <span className="gradient-text">Deniss.</span>
             </h2>
             <p className="text-lg text-muted leading-relaxed max-w-xl">
-              I run Link Design from Tallinn. For 7+ years I&apos;ve been making
+              I run Link Design from Tallinn. For <span className="text-foreground-secondary font-medium">7+ years</span> I&apos;ve been making
               design for newsrooms, car dealerships, and agencies that need things
               shipped yesterday. I work fast, I read brandbooks once, and I rebuild
               source files when they&apos;re missing. If your in-house team is
@@ -593,32 +643,36 @@ function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-32 md:py-40 px-6 bg-section-bg">
-      <div className="mx-auto max-w-[800px]">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-[-0.02em] text-foreground mb-16">
+    <section id="faq" className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
+      <div className="mx-auto max-w-[800px] relative z-10">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
           FAQ
         </h2>
-        <div className="space-y-0">
+        <div className="space-y-0 rounded-xl border border-border bg-background-secondary/50 shadow-elevated overflow-hidden">
           {questions.map((item, index) => (
-            <div key={index} className="border-b border-border">
+            <div key={index} className={`${index !== questions.length - 1 ? 'border-b border-border/50' : ''}`}>
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between py-6 text-left"
+                className="w-full flex items-center justify-between py-6 px-6 text-left hover:bg-accent/5 transition-colors duration-300"
               >
                 <span className="text-foreground font-medium pr-8">
                   {item.question}
                 </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-muted shrink-0 transition-transform ${
+                  className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 />
               </button>
-              {openIndex === index && (
-                <div className="pb-6">
+              <div 
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="px-6 pb-6">
                   <p className="text-muted leading-relaxed">{item.answer}</p>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>
@@ -630,17 +684,26 @@ function FAQ() {
 // Final CTA Section
 function FinalCTA() {
   return (
-    <section id="contact" className="bg-accent py-32 md:py-40 px-6">
-      <div className="mx-auto max-w-[1200px] text-center">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-[-0.02em] text-white mb-4">
-          Got a deadline?
+    <section id="contact" className="relative py-32 md:py-40 px-6 overflow-hidden">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-background to-[#a371f7]/10" />
+      <div className="absolute inset-0 noise-overlay" />
+      
+      {/* Floating orbs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 blur-3xl animate-float" />
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-[#a371f7]/10 blur-3xl animate-float animation-delay-300" />
+      
+      <div className="mx-auto max-w-[1200px] text-center relative z-10">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.02em] mb-4">
+          <span className="gradient-text">Got a deadline?</span>
         </h2>
-        <p className="text-xl text-white/70 mb-10">{"Let's start now."}</p>
+        <p className="text-xl text-muted mb-10">{"Let's start now."}</p>
         <a
           href="mailto:hello@linkdesign.studio"
-          className="inline-flex items-center justify-center h-12 px-8 bg-white text-accent rounded-lg text-sm font-medium hover:bg-white/90 transition-colors"
+          className="group inline-flex items-center justify-center h-14 px-8 btn-gradient text-white rounded-xl text-base font-semibold shadow-glow animate-pulse-glow"
         >
           Start a project
+          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
         </a>
       </div>
     </section>
@@ -650,17 +713,17 @@ function FinalCTA() {
 // Footer
 function Footer() {
   return (
-    <footer className="py-12 px-6 border-t border-border">
+    <footer className="py-12 px-6 border-t border-border bg-background-secondary">
       <div className="mx-auto max-w-[1200px]">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <span className="text-foreground font-medium">Link Design</span>
+            <span className="text-foreground font-semibold">Link Design</span>
             <span className="text-muted ml-2">Tallinn, Estonia</span>
           </div>
           <div className="flex items-center gap-6">
             <a
               href="mailto:hello@linkdesign.studio"
-              className="text-muted hover:text-foreground transition-colors text-sm"
+              className="text-muted hover:text-accent transition-colors duration-300 text-sm"
             >
               hello@linkdesign.studio
             </a>
@@ -668,7 +731,7 @@ function Footer() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted hover:text-foreground transition-colors"
+              className="text-muted hover:text-accent transition-colors duration-300"
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
