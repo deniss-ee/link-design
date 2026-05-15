@@ -10,9 +10,9 @@ import {
   FileQuestion,
   ChevronDown,
   ArrowRight,
+  ArrowUpRight,
   Menu,
   X,
-  Sparkles,
 } from "lucide-react";
 
 // Navigation Component
@@ -29,7 +29,7 @@ function Navigation() {
   }, []);
 
   const navLinks = [
-    { href: "#how-it-works", label: "How it works" },
+    { href: "#how-it-works", label: "Process" },
     { href: "#pricing", label: "Pricing" },
     { href: "#work", label: "Work" },
     { href: "#faq", label: "FAQ" },
@@ -37,24 +37,22 @@ function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "glass shadow-elevated"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto max-w-[1200px] px-6 py-4 flex items-center justify-between">
-        <a href="#" className="text-foreground font-semibold tracking-tight text-lg hover:text-accent transition-colors duration-300">
-          Link Design
+      <nav className="mx-auto max-w-[1400px] px-6 lg:px-12 py-5 flex items-center justify-between">
+        <a href="#" className="text-foreground font-medium tracking-tight text-xl">
+          Link<span className="text-accent">.</span>
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-12">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-muted hover:text-foreground transition-all duration-300 text-sm relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
+              className="text-muted hover:text-foreground transition-colors text-sm tracking-wide uppercase hover-slide pb-1"
             >
               {link.label}
             </a>
@@ -63,34 +61,31 @@ function Navigation() {
 
         <a
           href="#contact"
-          className="hidden md:flex items-center justify-center h-11 px-5 btn-gradient text-white rounded-lg text-sm font-medium shadow-glow-subtle"
+          className="hidden md:flex items-center gap-2 h-11 px-6 btn-primary rounded-full text-sm font-medium"
         >
-          Start a project
+          Start project
+          <ArrowUpRight className="w-4 h-4" />
         </a>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 text-muted hover:text-foreground transition-colors"
+          className="md:hidden p-2 text-foreground"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </nav>
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass border-t border-border px-6 py-4 shadow-elevated">
-          <div className="flex flex-col gap-4">
+        <div className="md:hidden bg-background border-b border-border px-6 py-8">
+          <div className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-muted hover:text-foreground transition-colors text-sm py-2"
+                className="text-foreground text-2xl font-light"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
@@ -98,10 +93,11 @@ function Navigation() {
             ))}
             <a
               href="#contact"
-              className="flex items-center justify-center h-11 px-5 btn-gradient text-white rounded-lg text-sm font-medium mt-2 shadow-glow-subtle"
+              className="flex items-center justify-center gap-2 h-12 btn-primary rounded-full text-sm font-medium mt-4"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Start a project
+              Start project
+              <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -113,47 +109,51 @@ function Navigation() {
 // Hero Section
 function Hero() {
   return (
-    <section className="relative pt-40 pb-32 md:pt-48 md:pb-40 px-6 hero-gradient noise-overlay overflow-hidden">
-      {/* Floating decorative elements */}
-      <div className="absolute top-32 right-[10%] w-64 h-64 rounded-full bg-accent/5 blur-3xl animate-float" />
-      <div className="absolute bottom-20 left-[5%] w-48 h-48 rounded-full bg-[#a371f7]/5 blur-3xl animate-float animation-delay-300" />
-      
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border mb-8 animate-fade-in-up">
-          <Sparkles className="w-4 h-4 text-accent" />
-          <span className="text-sm text-muted">Design on demand</span>
+    <section className="min-h-screen flex flex-col justify-center pt-24 pb-16 px-6 lg:px-12">
+      <div className="mx-auto max-w-[1400px] w-full">
+        {/* Top row */}
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-3 h-3 rounded-full bg-accent" />
+          <span className="text-sm tracking-widest uppercase text-muted">Design on demand</span>
         </div>
-        
-        <h1 className="text-5xl md:text-7xl lg:text-[80px] font-semibold tracking-[-0.03em] leading-[1.05] text-balance animate-fade-in-up animation-delay-100">
-          <span className="gradient-text">Design,</span>{" "}
-          <span className="text-foreground">delivered.</span>
+
+        {/* Main headline */}
+        <h1 className="text-[clamp(3rem,12vw,10rem)] font-light leading-[0.9] tracking-[-0.04em] mb-12">
+          Design<span className="text-accent">,</span>
+          <br />
+          delivered<span className="text-accent">.</span>
         </h1>
-        
-        <p className="mt-6 text-lg md:text-xl text-muted max-w-xl leading-relaxed animate-fade-in-up animation-delay-200">
-          A design partner for marketing teams that move fast. Banners, social,
-          print, HTML5. Usually shipped in <span className="text-foreground-secondary font-medium">48 hours</span>.
-        </p>
-        
-        <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-in-up animation-delay-300">
-          <a
-            href="#contact"
-            className="group flex items-center justify-center h-12 px-6 btn-gradient text-white rounded-lg text-sm font-medium shadow-glow"
-          >
-            Start a project
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href="#pricing"
-            className="flex items-center gap-2 text-muted hover:text-foreground transition-all duration-300 text-sm font-medium group"
-          >
-            See pricing
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
+
+        {/* Subtext + CTA row */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
+          <p className="text-xl md:text-2xl text-foreground-secondary leading-relaxed max-w-lg font-light">
+            A design partner for marketing teams that move fast. Banners, social, print, HTML5. 
+            Usually shipped in <span className="highlight-box">48 hours</span>.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <a
+              href="#contact"
+              className="group flex items-center gap-3 h-14 px-8 btn-primary rounded-full text-base font-medium"
+            >
+              Start a project
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href="#pricing"
+              className="flex items-center gap-2 h-14 px-8 btn-outline rounded-full text-base font-medium"
+            >
+              See pricing
+            </a>
+          </div>
         </div>
-        
-        <p className="mt-12 text-sm text-muted animate-fade-in-up animation-delay-400">
-          Trusted by <span className="text-foreground-secondary">Renault</span>, <span className="text-foreground-secondary">Dacia</span>, <span className="text-foreground-secondary">Delfi</span>
-        </p>
+
+        {/* Trust line */}
+        <div className="mt-24 pt-8 border-t border-border">
+          <p className="text-sm text-muted">
+            Trusted by <span className="text-foreground">Renault</span>, <span className="text-foreground">Dacia</span>, <span className="text-foreground">Delfi</span>
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -164,22 +164,16 @@ function LogoStrip() {
   const logos = ["Renault", "Dacia", "Delfi", "Postimees", "Apollo", "ERR"];
 
   return (
-    <section className="py-16 px-6 border-t border-border bg-background-secondary">
-      <div className="mx-auto max-w-[1200px]">
-        <p className="text-xs uppercase tracking-wider text-muted mb-8 text-center">
-          Working with
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          {logos.map((logo, index) => (
-            <span
-              key={logo}
-              className="text-muted/40 font-semibold text-lg tracking-tight hover:text-muted transition-colors duration-300"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {logo}
-            </span>
-          ))}
-        </div>
+    <section className="py-16 border-y border-border bg-background-alt overflow-hidden">
+      <div className="flex animate-marquee whitespace-nowrap">
+        {[...logos, ...logos].map((logo, index) => (
+          <span
+            key={index}
+            className="text-4xl md:text-5xl font-light text-muted/30 mx-12 tracking-tight"
+          >
+            {logo}
+          </span>
+        ))}
       </div>
     </section>
   );
@@ -211,70 +205,46 @@ function ChatThread() {
   ];
 
   return (
-    <section className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
-      <div className="mx-auto max-w-[600px] relative z-10">
-        <p className="text-xs uppercase tracking-wider text-muted mb-8 text-center">
-          How it usually goes
-        </p>
-        
-        <div className="flex flex-col gap-4">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`flex ${message.sender === "client" ? "justify-start" : "justify-end"}`}
-            >
+    <section className="py-24 md:py-32 px-6 lg:px-12">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-center">
+          {/* Left: Label */}
+          <div>
+            <span className="text-sm tracking-widest uppercase text-muted block mb-4">How it usually goes</span>
+            <p className="text-3xl md:text-4xl font-light text-foreground leading-snug">
+              Brief in. Design out.
+              <br />
+              Usually within <span className="text-accent">48 hours</span>.
+            </p>
+          </div>
+
+          {/* Right: Chat bubbles */}
+          <div className="space-y-4">
+            {messages.map((message, index) => (
               <div
-                className={`relative max-w-[80%] sm:max-w-[70%] px-4 py-3 rounded-2xl shadow-elevated transition-all duration-300 hover:scale-[1.02] ${
-                  message.sender === "client"
-                    ? "bg-background-secondary border border-border rounded-bl-md"
-                    : "bg-gradient-to-br from-accent to-[#a371f7] text-white rounded-br-md shadow-glow-subtle"
-                }`}
+                key={index}
+                className={`flex ${message.sender === "client" ? "justify-start" : "justify-end"}`}
               >
-                <p
-                  className={`text-sm sm:text-base leading-relaxed ${
-                    message.sender === "client" ? "text-foreground" : "text-white"
-                  }`}
-                >
-                  {message.text}
-                </p>
-                <span
-                  className={`block text-[10px] mt-1 ${
-                    message.sender === "client" ? "text-muted" : "text-white/70"
-                  }`}
-                >
-                  {message.time}
-                </span>
-                
-                {/* Bubble tail */}
                 <div
-                  className={`absolute bottom-0 w-3 h-3 ${
+                  className={`max-w-[85%] sm:max-w-[75%] px-5 py-4 rounded-2xl transition-all ${
                     message.sender === "client"
-                      ? "left-0 -translate-x-1/2 bg-background-secondary border-l border-b border-border"
-                      : "right-0 translate-x-1/2 bg-[#a371f7]"
+                      ? "bg-background-alt border border-border rounded-bl-sm"
+                      : "bg-foreground text-background rounded-br-sm"
                   }`}
-                  style={{
-                    clipPath: message.sender === "client" 
-                      ? "polygon(100% 0, 100% 100%, 0 100%)" 
-                      : "polygon(0 0, 100% 100%, 0 100%)",
-                  }}
-                />
+                >
+                  <p className="text-base leading-relaxed">{message.text}</p>
+                  <span
+                    className={`block text-xs mt-2 ${
+                      message.sender === "client" ? "text-muted" : "text-background/60"
+                    }`}
+                  >
+                    {message.time}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Typing indicator */}
-        <div className="flex justify-end mt-4">
-          <div className="flex items-center gap-1 px-4 py-3 bg-gradient-to-br from-accent/20 to-[#a371f7]/20 rounded-2xl rounded-br-md border border-accent/30">
-            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            ))}
           </div>
         </div>
-        
-        <p className="text-center text-muted text-sm mt-8">
-          Brief in. Design out. Usually within <span className="gradient-text font-semibold">48 hours</span>.
-        </p>
       </div>
     </section>
   );
@@ -301,23 +271,19 @@ function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-32 md:py-40 px-6 section-gradient-alt relative noise-overlay">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
-          How it works
-        </h2>
-        <div className="grid md:grid-cols-3 gap-12 md:gap-8">
-          {steps.map((step, index) => (
-            <div 
-              key={step.number} 
-              className="group p-6 rounded-xl border border-border bg-background-secondary/50 card-interactive"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <span className="inline-block text-sm text-accent font-mono bg-accent/10 px-3 py-1 rounded-full">{step.number}</span>
-              <h3 className="text-xl font-semibold text-foreground mt-4 mb-3 group-hover:text-accent transition-colors duration-300">
-                {step.title}
-              </h3>
-              <p className="text-muted leading-relaxed">{step.description}</p>
+    <section id="how-it-works" className="py-24 md:py-32 px-6 lg:px-12 bg-foreground text-background">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex items-baseline justify-between mb-20">
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight">How it works</h2>
+          <span className="hidden md:block text-sm text-background/40 tracking-widest uppercase">Process</span>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-px bg-background/10">
+          {steps.map((step) => (
+            <div key={step.number} className="bg-foreground p-8 md:p-12">
+              <span className="number-large text-background/10">{step.number}</span>
+              <h3 className="text-2xl md:text-3xl font-light mt-4 mb-4">{step.title}</h3>
+              <p className="text-background/60 text-lg">{step.description}</p>
             </div>
           ))}
         </div>
@@ -362,25 +328,21 @@ function Services() {
   ];
 
   return (
-    <section className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
-          What we do
-        </h2>
+    <section className="py-24 md:py-32 px-6 lg:px-12">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex items-baseline justify-between mb-20">
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground">What we do</h2>
+          <span className="hidden md:block text-sm text-muted tracking-widest uppercase">Services</span>
+        </div>
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <div 
-              key={service.title} 
-              className="group p-6 rounded-xl border border-border bg-background/50 card-interactive"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors duration-300">
-                <service.icon className="w-6 h-6 text-accent" strokeWidth={1.5} />
+          {services.map((service) => (
+            <div key={service.title} className="group card-editorial p-8 rounded-2xl">
+              <div className="w-14 h-14 rounded-full border-2 border-foreground flex items-center justify-center mb-6 group-hover:bg-foreground group-hover:text-background transition-colors">
+                <service.icon className="w-6 h-6" strokeWidth={1.5} />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">
-                {service.title}
-              </h3>
-              <p className="text-muted leading-relaxed">{service.description}</p>
+              <h3 className="text-xl font-medium text-foreground mb-2">{service.title}</h3>
+              <p className="text-muted">{service.description}</p>
             </div>
           ))}
         </div>
@@ -452,49 +414,59 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-32 md:py-40 px-6 section-gradient-alt noise-overlay relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
-          Pricing
-        </h2>
+    <section id="pricing" className="py-24 md:py-32 px-6 lg:px-12 bg-background-alt">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex items-baseline justify-between mb-20">
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground">Pricing</h2>
+          <span className="hidden md:block text-sm text-muted tracking-widest uppercase">Plans</span>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tiers.map((tier, index) => (
+          {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col p-6 rounded-xl transition-all duration-300 hover-lift ${
+              className={`relative flex flex-col p-8 rounded-2xl transition-all ${
                 tier.highlighted
-                  ? "card-highlighted shadow-glow"
-                  : "border border-border bg-background-secondary/50 hover:border-accent/50 hover:shadow-elevated"
+                  ? "bg-foreground text-background"
+                  : "card-editorial"
               }`}
-              style={{ animationDelay: `${index * 100}ms` }}
             >
               {tier.highlighted && (
-                <span className="absolute -top-3 left-6 bg-gradient-to-r from-accent to-[#a371f7] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-glow-subtle">
+                <span className="absolute -top-3 left-8 bg-accent text-background text-xs font-medium px-4 py-1.5 rounded-full">
                   Most popular
                 </span>
               )}
-              <h3 className="text-lg font-semibold text-foreground">{tier.name}</h3>
-              <div className="mt-4 mb-6">
-                <span className={`text-4xl font-semibold tracking-tight ${tier.highlighted ? 'gradient-text' : 'text-foreground'}`}>
-                  {tier.price} €
+              <h3 className={`text-lg font-medium ${tier.highlighted ? "text-background" : "text-foreground"}`}>
+                {tier.name}
+              </h3>
+              <div className="mt-6 mb-8">
+                <span className={`text-5xl font-light tracking-tight ${tier.highlighted ? "text-background" : "text-foreground"}`}>
+                  {tier.price}
                 </span>
-                <span className="text-muted ml-2 text-sm">{tier.unit}</span>
+                <span className={`text-lg ml-1 ${tier.highlighted ? "text-background/60" : "text-muted"}`}>€</span>
+                <span className={`block text-sm mt-1 ${tier.highlighted ? "text-background/60" : "text-muted"}`}>
+                  {tier.unit}
+                </span>
               </div>
-              <div className="h-px bg-border mb-6" />
-              <ul className="flex-1 space-y-3 mb-8">
+              <ul className="flex-1 space-y-4 mb-8">
                 {tier.features.map((feature) => (
-                  <li key={feature} className="text-sm text-muted leading-relaxed flex items-start gap-2">
-                    <span className="text-accent mt-1">•</span>
+                  <li
+                    key={feature}
+                    className={`text-sm flex items-start gap-3 ${
+                      tier.highlighted ? "text-background/80" : "text-muted"
+                    }`}
+                  >
+                    <span className={tier.highlighted ? "text-accent" : "text-accent"}>—</span>
                     {feature}
                   </li>
                 ))}
               </ul>
               <a
                 href="#contact"
-                className={`flex items-center justify-center h-11 rounded-lg text-sm font-medium transition-all duration-300 ${
+                className={`flex items-center justify-center h-12 rounded-full text-sm font-medium transition-all ${
                   tier.highlighted
-                    ? "btn-gradient text-white shadow-glow-subtle"
-                    : "border border-border text-foreground hover:border-accent hover:text-accent hover:bg-accent/5"
+                    ? "bg-background text-foreground hover:bg-accent hover:text-background"
+                    : "btn-outline hover:bg-foreground hover:text-background"
                 }`}
               >
                 {tier.cta}
@@ -502,11 +474,10 @@ function Pricing() {
             </div>
           ))}
         </div>
-        <p className="mt-8 text-sm text-muted text-center">
+
+        <p className="mt-12 text-center text-muted">
           All plans include 1 round of revisions. Need something custom?{" "}
-          <a href="#contact" className="text-accent hover:underline transition-colors">
-            {"Let's talk."}
-          </a>
+          <a href="#contact" className="text-accent hover:underline">{"Let's talk."}</a>
         </p>
       </div>
     </section>
@@ -531,46 +502,42 @@ function ComparisonTable() {
   ];
 
   return (
-    <section className="pb-32 md:pb-40 px-6 section-gradient-alt relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
+    <section className="pb-24 md:pb-32 px-6 lg:px-12 bg-background-alt">
+      <div className="mx-auto max-w-[1400px]">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group flex items-center gap-2 text-muted hover:text-accent transition-all duration-300 text-sm"
+          className="group flex items-center gap-3 text-foreground hover:text-accent transition-colors text-sm font-medium"
         >
-          See full comparison
-          <ChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          />
+          <span className="tracking-wide uppercase">See full comparison</span>
+          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
         </button>
 
         {isOpen && (
-          <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-background-secondary/50 shadow-elevated">
-            <table className="w-full min-w-[600px]">
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card-bg">
+            <table className="w-full min-w-[700px]">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">
-                    Feature
-                  </th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-foreground">
-                    Pay-as-you-go
-                  </th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-foreground">
-                    Lite
-                  </th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold text-accent">
-                    Core
-                  </th>
-                  <th className="text-left py-4 px-6 text-sm font-semibold text-foreground">
-                    Pro
-                  </th>
+                  <th className="text-left py-5 px-6 text-sm font-medium text-foreground">Feature</th>
+                  <th className="text-left py-5 px-5 text-sm font-medium text-foreground">Pay-as-you-go</th>
+                  <th className="text-left py-5 px-5 text-sm font-medium text-foreground">Lite</th>
+                  <th className="text-left py-5 px-5 text-sm font-medium text-accent">Core</th>
+                  <th className="text-left py-5 px-6 text-sm font-medium text-foreground">Pro</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row, index) => (
-                  <tr key={row.label} className={`border-b border-border/50 hover:bg-accent/5 transition-colors ${index === rows.length - 1 ? 'border-b-0' : ''}`}>
+                  <tr
+                    key={row.label}
+                    className={`border-b border-border/50 hover:bg-background-alt/50 transition-colors ${
+                      index === rows.length - 1 ? "border-b-0" : ""
+                    }`}
+                  >
                     <td className="py-4 px-6 text-sm text-muted">{row.label}</td>
                     {row.values.map((value, i) => (
-                      <td key={i} className={`py-4 px-4 text-sm ${i === 2 ? 'text-accent' : 'text-foreground-secondary'}`}>
+                      <td
+                        key={i}
+                        className={`py-4 px-5 text-sm ${i === 2 ? "text-accent font-medium" : "text-foreground-secondary"}`}
+                      >
                         {value}
                       </td>
                     ))}
@@ -597,35 +564,32 @@ function Work() {
   ];
 
   return (
-    <section id="work" className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
-          Selected work
-        </h2>
+    <section id="work" className="py-24 md:py-32 px-6 lg:px-12">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex items-baseline justify-between mb-20">
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground">Selected work</h2>
+          <span className="hidden md:block text-sm text-muted tracking-widest uppercase">Portfolio</span>
+        </div>
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group relative aspect-[4/3] bg-background-secondary rounded-xl overflow-hidden border border-border card-interactive"
-              style={{ animationDelay: `${index * 50}ms` }}
+              className="group relative aspect-[4/3] bg-background-alt rounded-2xl overflow-hidden border border-border hover:border-foreground transition-all cursor-pointer"
             >
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-                <h3 className="text-foreground font-semibold">{project.title}</h3>
-                <p className="text-muted text-sm mt-1">
-                  {project.description}
-                </p>
+              {/* Grid pattern placeholder */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
+                  backgroundSize: '40px 40px'
+                }} />
               </div>
-              
-              {/* Placeholder grid pattern */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <div className="w-16 h-16 border-2 border-dashed border-muted rounded-lg" />
+
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-foreground/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-background p-6">
+                <h3 className="text-xl font-medium text-center">{project.title}</h3>
+                <p className="text-background/60 text-sm mt-2">{project.description}</p>
+                <ArrowUpRight className="w-5 h-5 mt-4 opacity-60" />
               </div>
             </div>
           ))}
@@ -638,22 +602,23 @@ function Work() {
 // About Section
 function About() {
   return (
-    <section className="py-32 md:py-40 px-6 section-gradient-alt noise-overlay relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <div className="grid md:grid-cols-[280px_1fr] gap-12 md:gap-16 items-start">
-          <div className="aspect-square bg-background-secondary rounded-xl border border-border shadow-elevated overflow-hidden relative group">
-            {/* Placeholder with gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-[#a371f7]/10" />
+    <section className="py-24 md:py-32 px-6 lg:px-12 bg-background-alt">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24 items-start">
+          {/* Photo placeholder */}
+          <div className="aspect-[3/4] bg-card-bg rounded-2xl border border-border overflow-hidden relative">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full border-2 border-dashed border-muted/30" />
+              <div className="w-24 h-24 rounded-full border-2 border-border" />
             </div>
           </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-6">
-              {"Hi, I'm"} <span className="gradient-text">Deniss.</span>
+
+          {/* Bio */}
+          <div className="lg:pt-12">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-foreground mb-8 leading-tight">
+              Hi, I&apos;m <span className="text-accent">Deniss</span>.
             </h2>
-            <p className="text-lg text-muted leading-relaxed max-w-xl">
-              I run Link Design from Tallinn. For <span className="text-foreground-secondary font-medium">7+ years</span> I&apos;ve been making
+            <p className="text-xl md:text-2xl text-foreground-secondary leading-relaxed font-light max-w-2xl">
+              I run Link Design from Tallinn. For <span className="highlight-box">7+ years</span> I&apos;ve been making
               design for newsrooms, car dealerships, and agencies that need things
               shipped yesterday. I work fast, I read brandbooks once, and I rebuild
               source files when they&apos;re missing. If your in-house team is
@@ -710,35 +675,32 @@ function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
-      <div className="mx-auto max-w-[800px] relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground mb-16">
-          FAQ
+    <section id="faq" className="py-24 md:py-32 px-6 lg:px-12">
+      <div className="mx-auto max-w-[900px]">
+        <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground mb-16 text-center">
+          Frequently asked
         </h2>
-        <div className="space-y-0 rounded-xl border border-border bg-background-secondary/50 shadow-elevated overflow-hidden">
+
+        <div className="space-y-0">
           {questions.map((item, index) => (
-            <div key={index} className={`${index !== questions.length - 1 ? 'border-b border-border/50' : ''}`}>
+            <div key={index} className="border-b border-border">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between py-6 px-6 text-left hover:bg-accent/5 transition-colors duration-300"
+                className="w-full flex items-center justify-between py-6 text-left group"
               >
-                <span className="text-foreground font-medium pr-8">
+                <span className="text-foreground text-lg font-light pr-8 group-hover:text-accent transition-colors">
                   {item.question}
                 </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
-                />
+                <div className={`w-8 h-8 rounded-full border border-border flex items-center justify-center shrink-0 group-hover:border-accent group-hover:text-accent transition-colors ${openIndex === index ? 'bg-accent border-accent text-background' : ''}`}>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""}`} />
+                </div>
               </button>
-              <div 
+              <div
                 className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  openIndex === index ? "max-h-96 opacity-100 pb-6" : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="px-6 pb-6">
-                  <p className="text-muted leading-relaxed">{item.answer}</p>
-                </div>
+                <p className="text-muted leading-relaxed pr-16">{item.answer}</p>
               </div>
             </div>
           ))}
@@ -751,26 +713,19 @@ function FAQ() {
 // Final CTA Section
 function FinalCTA() {
   return (
-    <section id="contact" className="relative py-32 md:py-40 px-6 overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-background to-[#a371f7]/10" />
-      <div className="absolute inset-0 noise-overlay" />
-      
-      {/* Floating orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 blur-3xl animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-[#a371f7]/10 blur-3xl animate-float animation-delay-300" />
-      
-      <div className="mx-auto max-w-[1200px] text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.02em] mb-4">
-          <span className="gradient-text">Got a deadline?</span>
+    <section id="contact" className="py-32 md:py-48 px-6 lg:px-12 bg-foreground text-background">
+      <div className="mx-auto max-w-[1400px] text-center">
+        <span className="text-sm tracking-widest uppercase text-background/40 block mb-8">Ready to start?</span>
+        <h2 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight mb-6">
+          Got a deadline<span className="text-accent">?</span>
         </h2>
-        <p className="text-xl text-muted mb-10">{"Let's start now."}</p>
+        <p className="text-xl text-background/60 mb-12">{"Let's start now."}</p>
         <a
           href="mailto:hello@linkdesign.studio"
-          className="group inline-flex items-center justify-center h-14 px-8 btn-gradient text-white rounded-xl text-base font-semibold shadow-glow animate-pulse-glow"
+          className="group inline-flex items-center gap-3 h-16 px-10 bg-background text-foreground rounded-full text-lg font-medium hover:bg-accent hover:text-background transition-colors"
         >
           Start a project
-          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </a>
       </div>
     </section>
@@ -780,17 +735,17 @@ function FinalCTA() {
 // Footer
 function Footer() {
   return (
-    <footer className="py-12 px-6 border-t border-border bg-background-secondary">
-      <div className="mx-auto max-w-[1200px]">
+    <footer className="py-12 px-6 lg:px-12 border-t border-border">
+      <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <span className="text-foreground font-semibold">Link Design</span>
-            <span className="text-muted ml-2">Tallinn, Estonia</span>
+          <div className="flex items-center gap-3">
+            <span className="text-foreground font-medium text-lg">Link<span className="text-accent">.</span></span>
+            <span className="text-muted text-sm">Tallinn, Estonia</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             <a
               href="mailto:hello@linkdesign.studio"
-              className="text-muted hover:text-accent transition-colors duration-300 text-sm"
+              className="text-muted hover:text-foreground transition-colors text-sm"
             >
               hello@linkdesign.studio
             </a>
@@ -798,7 +753,7 @@ function Footer() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted hover:text-accent transition-colors duration-300"
+              className="text-muted hover:text-foreground transition-colors"
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -807,9 +762,7 @@ function Footer() {
             </a>
           </div>
         </div>
-        <p className="mt-8 text-sm text-muted">
-          © 2026 Link Design OÜ
-        </p>
+        <p className="mt-8 text-sm text-muted">© 2026 Link Design OÜ</p>
       </div>
     </footer>
   );
