@@ -185,29 +185,96 @@ function LogoStrip() {
   );
 }
 
-// Problem/Promise Section
-function ProblemPromise() {
+// Chat Thread Section
+function ChatThread() {
+  const messages = [
+    {
+      sender: "client",
+      text: "we dont have source files, we need 7 banners by tomorrow",
+      time: "9:47 AM",
+    },
+    {
+      sender: "studio",
+      text: "send the brief, done by yesterday",
+      time: "9:48 AM",
+    },
+    {
+      sender: "client",
+      text: "wait can you also resize for social? stories + feed",
+      time: "9:52 AM",
+    },
+    {
+      sender: "studio",
+      text: "adding to the queue. you'll have everything by 6pm",
+      time: "9:53 AM",
+    },
+  ];
+
   return (
     <section className="py-32 md:py-40 px-6 section-gradient noise-overlay relative">
-      <div className="mx-auto max-w-[1200px] relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-20">
-          <div>
-            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-snug text-balance">
-              Need a banner by tomorrow. Five sizes.{" "}
-              <span className="text-muted">No source files.</span>{" "}
-              Sound familiar?
-            </p>
-          </div>
-          <div className="flex items-center">
-            <div className="p-6 rounded-xl glass border border-border shadow-elevated hover-lift">
-              <p className="text-lg md:text-xl text-foreground-secondary leading-relaxed">
-                Brief in. Design out. Usually within{" "}
-                <span className="gradient-text font-semibold">48 hours</span>. No long onboarding,
-                no missing files, no chase.
-              </p>
+      <div className="mx-auto max-w-[600px] relative z-10">
+        <p className="text-xs uppercase tracking-wider text-muted mb-8 text-center">
+          How it usually goes
+        </p>
+        
+        <div className="flex flex-col gap-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${message.sender === "client" ? "justify-start" : "justify-end"}`}
+            >
+              <div
+                className={`relative max-w-[80%] sm:max-w-[70%] px-4 py-3 rounded-2xl shadow-elevated transition-all duration-300 hover:scale-[1.02] ${
+                  message.sender === "client"
+                    ? "bg-background-secondary border border-border rounded-bl-md"
+                    : "bg-gradient-to-br from-accent to-[#a371f7] text-white rounded-br-md shadow-glow-subtle"
+                }`}
+              >
+                <p
+                  className={`text-sm sm:text-base leading-relaxed ${
+                    message.sender === "client" ? "text-foreground" : "text-white"
+                  }`}
+                >
+                  {message.text}
+                </p>
+                <span
+                  className={`block text-[10px] mt-1 ${
+                    message.sender === "client" ? "text-muted" : "text-white/70"
+                  }`}
+                >
+                  {message.time}
+                </span>
+                
+                {/* Bubble tail */}
+                <div
+                  className={`absolute bottom-0 w-3 h-3 ${
+                    message.sender === "client"
+                      ? "left-0 -translate-x-1/2 bg-background-secondary border-l border-b border-border"
+                      : "right-0 translate-x-1/2 bg-[#a371f7]"
+                  }`}
+                  style={{
+                    clipPath: message.sender === "client" 
+                      ? "polygon(100% 0, 100% 100%, 0 100%)" 
+                      : "polygon(0 0, 100% 100%, 0 100%)",
+                  }}
+                />
+              </div>
             </div>
+          ))}
+        </div>
+        
+        {/* Typing indicator */}
+        <div className="flex justify-end mt-4">
+          <div className="flex items-center gap-1 px-4 py-3 bg-gradient-to-br from-accent/20 to-[#a371f7]/20 rounded-2xl rounded-br-md border border-accent/30">
+            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+            <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
           </div>
         </div>
+        
+        <p className="text-center text-muted text-sm mt-8">
+          Brief in. Design out. Usually within <span className="gradient-text font-semibold">48 hours</span>.
+        </p>
       </div>
     </section>
   );
@@ -755,7 +822,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       <LogoStrip />
-      <ProblemPromise />
+      <ChatThread />
       <HowItWorks />
       <Services />
       <Pricing />
