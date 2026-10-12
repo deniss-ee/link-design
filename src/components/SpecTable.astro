@@ -1,0 +1,55 @@
+---
+import type { Copy } from "../i18n/en";
+import { plans, hourlyRate } from "../data/plans";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const c = t.compare;
+const names = plans.map((pl) => t.pricing.plans[pl.id].name);
+
+// Values come from the same data as the cards, so table and cards cannot disagree.
+function cell(key: string, i: number): string {
+  const plan = plans[i]!;
+  const specs = t.pricing.plans[plan.id].specs;
+  if (key === "rate") {
+    return `${hourlyRate(plan)} €${plan.hours ? "*" : ""}`;
+  }
+  return specs[key as keyof typeof specs];
+}
+---
+
+<section id="compare" class="gutter py-16 md:py-24">
+  <div class="flex items-baseline justify-between gap-6">
+    <p class="label">{c.label}</p>
+    <p class="label hidden text-right sm:block">{c.tag}</p>
+  </div>
+  <h2 class="h-section mt-1">{c.title}</h2>
+
+  <div class="mt-12 overflow-x-auto" tabindex="0" role="region" aria-label={c.title}>
+    <table class="w-full min-w-[40rem] border-collapse text-left">
+      <caption class="sr-only">{c.title}</caption>
+      <thead>
+        <tr class="rule-top">
+          <th scope="col" class="label w-[28%] py-5 pr-4 font-normal">{c.itemHeader}</th>
+          {names.map((name, i) => (
+            <th scope="col" class="label w-[18%] px-4 py-5 font-normal">
+              {name}{plans[i]?.featured && <span class="text-accent"> *</span>}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {c.rows.map((row) => (
+          <tr class="rule-top">
+            <th scope="row" class="font-display py-5 pr-4 text-[1.1875rem] font-medium">{row.label}</th>
+            {plans.map((plan, i) => (
+              <td class:list={["font-mono px-4 py-5 text-[0.8125rem]", plan.featured && "bg-sand"]}>
+                {cell(row.key, i)}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="label mt-6">{c.footnote}</p>
+</section>

@@ -1,0 +1,23 @@
+---
+import type { Copy } from "../i18n/en";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const f = t.faq;
+---
+
+<section id="faq" class="gutter py-16 md:py-24">
+  <p class="label">{f.label}</p>
+  <h2 class="h-section mt-1 max-w-[9em]">
+    {f.title[0]}<br />{f.title[1]}<br /><em>{f.title[2]}</em>
+  </h2>
+
+  <dl class="mt-14 border-t border-rule">
+    {f.items.map((item, i) => (
+      <div class="rule-bottom grid gap-x-8 gap-y-3 py-8 md:grid-cols-[6rem_minmax(0,1fr)_minmax(0,1.05fr)]">
+        <span class="label hidden md:block" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <dt class="font-display text-[1.375rem] font-semibold leading-snug md:max-w-[28rem]">{item.q}</dt>
+        <dd class="text-[1rem] leading-[1.6] text-muted">{item.a}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

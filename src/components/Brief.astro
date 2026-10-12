@@ -1,0 +1,19 @@
+---
+import type { Copy } from "../i18n/en";
+interface Props { t: Copy }
+const { t } = Astro.props;
+---
+
+<section id="brief" class="gutter py-20 md:py-28">
+  <div class="grid gap-x-10 gap-y-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]">
+    <div>
+      <p class="label">{t.brief.label}</p>
+      <h2 class="h-display mt-2 max-w-[6.5em] text-[clamp(2rem,3.2vw,2.5rem)]">{t.brief.title}</h2>
+    </div>
+    <div class="max-w-[39rem] space-y-6 text-[1.1875rem] leading-[1.5]">
+      <p>{t.brief.p1}</p>
+      <p class="italic text-muted">{t.brief.quote}</p>
+      <p>{t.brief.p2}</p>
+    </div>
+  </div>
+</section>

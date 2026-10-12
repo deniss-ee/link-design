@@ -1,0 +1,24 @@
+---
+import type { Copy } from "../i18n/en";
+interface Props { t: Copy }
+const { t } = Astro.props;
+---
+
+<section id="services" class="gutter py-16 md:py-24">
+  <div class="flex items-baseline justify-between gap-6">
+    <p class="label">{t.services.label}</p>
+    <p class="label text-right">{t.services.tag}</p>
+  </div>
+  <h2 class="h-section mt-1">{t.services.title}</h2>
+
+  <ol class="mt-12 md:mt-16">
+    {t.services.items.map((item, i) => (
+      <li class="rule-bottom grid gap-x-8 gap-y-2 py-8 md:grid-cols-[6rem_minmax(0,1fr)_minmax(0,17rem)_minmax(0,18rem)] md:items-center md:py-12">
+        <span class="label hidden md:block">{String(i + 1).padStart(2, "0")}</span>
+        <h3 class="font-display text-[clamp(1.5rem,2.6vw,2.375rem)] font-normal leading-tight">{item.title}</h3>
+        <p class="label">{item.tags}</p>
+        <p class="text-[0.9375rem] leading-[1.5] text-muted md:text-right">{item.text}</p>
+      </li>
+    ))}
+  </ol>
+</section>

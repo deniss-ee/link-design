@@ -1,0 +1,20 @@
+---
+import type { Copy } from "../i18n/en";
+import { config } from "../data/config";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="gutter pb-8 pt-8">
+  <div class="label flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+    <span>© {year} {config.legalEntity}</span>
+    <span>{config.location}</span>
+    <a href={`mailto:${config.email}`} class="link-u label-ink">{config.email}</a>
+    <a href={config.linkedin} rel="noopener" class="link-u label-ink">{t.footer.linkedin}</a>
+    <a href="#top" class="link-u label-ink">{t.ui.up}</a>
+  </div>
+  <p class="font-display mt-10 select-none text-[clamp(3.25rem,13.4vw,11rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-[#2a2622]" aria-hidden="true">
+    {config.name}.
+  </p>
+</footer>

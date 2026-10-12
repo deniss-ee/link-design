@@ -1,0 +1,29 @@
+---
+import type { Copy } from "../i18n/en";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const w = t.work;
+---
+
+<section id="work" class="rule-top gutter py-16 md:py-24">
+  <div class="grid gap-x-10 gap-y-8 md:grid-cols-2">
+    <div>
+      <p class="label">{w.label}</p>
+      <h2 class="h-section mt-1 italic">{w.title[0]}<br />{w.title[1]}</h2>
+    </div>
+    <p class="max-w-[30rem] text-[1.0625rem] leading-[1.55] text-muted md:pt-6">{w.intro}</p>
+  </div>
+
+  <ol class="mt-14 lg:mt-16">
+    {w.rows.map((row, i) => (
+      <li class="grid gap-x-6 gap-y-1 py-4 md:grid-cols-[6rem_6rem_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,11rem)] md:items-baseline">
+        <span class="label hidden md:block">{String(i + 1).padStart(3, "0")}</span>
+        <span class="label label-ink">{row.year}</span>
+        <h3 class="font-display text-[1.5rem] font-medium leading-tight">{row.client}</h3>
+        <p class="text-[0.9375rem] italic text-muted">{row.what}</p>
+        <p class="label md:text-right">{row.sector}</p>
+      </li>
+    ))}
+  </ol>
+  <p class="label mt-12">{w.footnote}</p>
+</section>
