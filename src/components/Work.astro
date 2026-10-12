@@ -1,0 +1,34 @@
+---
+import type { Copy } from "../i18n/en";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const w = t.work;
+---
+
+<section id="work" class="gutter flex min-h-[100svh] items-center bg-sand py-16 md:py-20">
+  <div class="grid w-full gap-x-24 gap-y-14 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+    <div>
+      <h2 class="font-display text-[clamp(2.25rem,4.4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.025em]">{w.title}</h2>
+      <ul class="mt-8 border-t border-rule">
+        {w.items.map((item) => (
+          <li class="border-b border-rule py-4">
+            <h3 class="font-display text-[1.5rem] font-medium leading-snug">{item.title}</h3>
+            <p class="mt-1 text-[1.0625rem] leading-[1.5] text-muted">{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-display text-[clamp(2.25rem,4.4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.025em]">{w.howTitle}</h2>
+      <ol class="mt-8 border-t border-rule">
+        {w.steps.map((step) => (
+          <li class="border-b border-rule py-4">
+            <h3 class="font-display text-[1.5rem] font-medium leading-snug">{step.title}</h3>
+            <p class="mt-1 text-[1.0625rem] leading-[1.5] text-muted">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

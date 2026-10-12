@@ -1,36 +1,36 @@
 ---
 import type { Copy } from "../i18n/en";
+import { config } from "../data/config";
 interface Props { t: Copy }
 const { t } = Astro.props;
 const [l1, l2a, l2b] = t.hero.title;
 const word = l2b.replace(/\.$/, "");
 ---
 
-<section id="top" class="gutter">
-  <div class="grid gap-x-10 gap-y-10 py-14 md:py-20 lg:grid-cols-[10.25rem_minmax(0,1fr)_17.8rem] lg:gap-y-0">
-    <p class="label lg:pt-[3.2rem]">{t.hero.label}</p>
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper"
+>{t.ui.skip}</a>
 
-    <div>
-      <h1 class="h-display text-[clamp(3.25rem,10.2vw,8.25rem)] leading-[0.9] tracking-[-0.03em]">
-        <span class="block font-medium">{l1}</span>
-        <span class="block whitespace-nowrap">
-          <em class="font-normal">{l2a}</em>{" "}
-          <span class="font-medium underline decoration-rule decoration-1 underline-offset-[0.14em]">{word}</span><span class="font-medium">.</span>
-        </span>
-      </h1>
-      <p class="mt-10 max-w-[38rem] text-[clamp(1.125rem,1.75vw,1.375rem)] leading-[1.45]">{t.hero.sub}</p>
-    </div>
+<section id="top" class="gutter flex min-h-[100svh] flex-col">
+  <header class="flex items-baseline justify-between py-6">
+    <a href="#top" class="font-display text-xl font-semibold tracking-[-0.01em]">{config.name}</a>
+    <a href="#contact" class="link-u text-base">{t.header.cta}</a>
+  </header>
 
-    <aside class="self-end">
-      <dl class="rule-top">
-        {t.hero.aside.map((row) => (
-          <div class="rule-bottom flex items-baseline justify-between py-2.5 last:border-b-0">
-            <dt class="label">{row.k}</dt>
-            <dd class="label label-ink">{row.v}</dd>
-          </div>
-        ))}
-      </dl>
-      <a href="#contact" class="cta-arrow mt-8 inline-block">{t.hero.cta} →</a>
-    </aside>
+  <div class="flex flex-1 flex-col justify-center pb-24 pt-10">
+    <h1 class="font-display text-[clamp(3.5rem,11.5vw,10rem)] font-medium leading-[0.9] tracking-[-0.035em]">
+      <span class="block">{l1}</span>
+      <span class="block whitespace-nowrap">
+        <em class="font-normal">{l2a}</em>{" "}
+        <span class="underline decoration-rule decoration-1 underline-offset-[0.14em]">{word}</span>.
+      </span>
+    </h1>
+
+    <p class="mt-10 max-w-[34rem] text-[clamp(1.1875rem,1.8vw,1.4375rem)] leading-[1.45] text-muted">{t.hero.sub}</p>
+
+    <a href="#contact" class="font-display mt-10 inline-block self-start text-[1.5rem] font-medium underline decoration-1 underline-offset-[0.3em] hover:text-accent">
+      {t.hero.cta} →
+    </a>
   </div>
 </section>

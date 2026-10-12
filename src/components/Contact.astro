@@ -1,0 +1,49 @@
+---
+import type { Copy } from "../i18n/en";
+import { config } from "../data/config";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const p = t.price;
+const c = t.contact;
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="gutter flex min-h-[100svh] flex-col bg-ink text-paper">
+  <div class="grid flex-1 content-center gap-x-24 gap-y-16 py-16 md:grid-cols-2 md:py-20">
+    <div id="price">
+      <h2 class="font-display text-[clamp(2.25rem,4.4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.025em]">{p.title}</h2>
+      <p class="font-display mt-6 flex flex-wrap items-baseline gap-x-4 text-[clamp(4.5rem,9vw,7rem)] font-normal leading-none tracking-[-0.04em]">
+        {p.amount}
+        <span class="text-[clamp(1.25rem,2vw,1.75rem)] tracking-normal text-paper/70">{p.unit}</span>
+      </p>
+      <p class="mt-6 max-w-[28rem] text-paper/80">{p.lead}</p>
+      <ul class="mt-6 max-w-[28rem] border-t border-paper/25">
+        {p.terms.map((term) => (
+          <li class="border-b border-paper/25 py-2.5 text-[1.0625rem] text-paper/90">{term}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="md:pt-2">
+      <h2 class="font-display text-[clamp(2.5rem,5vw,4.25rem)] font-medium leading-[1] tracking-[-0.03em]">
+        {c.title[0]}<br />{c.title[1]} <em class="font-normal text-accent-on-dark">{c.title[2]}</em><br />{c.title[3]}
+      </h2>
+      <div class="mt-12 space-y-6">
+        <a
+          href={`mailto:${config.email}`}
+          class="font-display block w-fit border-b border-paper pb-1 text-[clamp(1.5rem,2.4vw,2rem)] hover:text-accent-on-dark hover:border-accent-on-dark"
+        >{config.email}</a>
+        <a
+          href={config.telegram.url}
+          rel="noopener"
+          class="font-display block w-fit border-b border-paper pb-1 text-[clamp(1.5rem,2.4vw,2rem)] hover:text-accent-on-dark hover:border-accent-on-dark"
+        >{config.telegram.handle}</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-paper/25 py-6 text-[0.9375rem] text-paper/70">
+    <span>© {year} {config.legalEntity}</span>
+    <span>{config.location}</span>
+  </footer>
+</section>
