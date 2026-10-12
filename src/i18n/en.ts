@@ -175,28 +175,20 @@ export const en: Page = {
         text: `${config.legalEntity}, ${config.location}. Contact: ${config.email}.`,
       },
       {
-        heading: "What is collected",
-        text: "The name, email address, deadline and brief text you type into the form. Nothing else is collected through the form.",
+        heading: "What happens to the form",
+        text: "The brief form sends your name, email, deadline and message to Link Design as an email, through the form service Web3Forms. The site itself stores nothing.",
       },
       {
-        heading: "Why",
-        text: "To reply to your brief and send an estimate. Your details are not used for newsletters or marketing.",
+        heading: "What it is used for",
+        text: "Only to reply to your brief. No newsletters, no marketing.",
       },
       {
-        heading: "Who receives it",
-        text: "The form is delivered by Web3Forms, which forwards each submission to the Link Design email inbox. Email is handled by the mail provider used for that inbox.",
+        heading: "Cookies",
+        text: "The site sets no cookies.",
       },
       {
-        heading: "How long it is kept",
-        text: "As long as needed to handle the request, and for bookkeeping if work follows. You can ask for deletion at any time.",
-      },
-      {
-        heading: "Cookies and analytics",
-        text: "The site sets no cookies. If visit statistics are enabled, they are cookieless and contain no personal profiles.",
-      },
-      {
-        heading: "Your rights",
-        text: `You can ask for access, correction or deletion of your data by writing to ${config.email}. You can also complain to the Estonian Data Protection Inspectorate (Andmekaitse Inspektsioon).`,
+        heading: "Questions or deletion",
+        text: `Write to ${config.email} and your message will be deleted.`,
       },
     ],
   },
