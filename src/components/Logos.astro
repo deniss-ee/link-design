@@ -1,0 +1,23 @@
+---
+// Scrolling strip of client wordmarks. Toggle with config.features.logos.
+import { config } from "../data/config";
+interface Props { label: string }
+const { label } = Astro.props;
+// Two identical groups; the track slides -50% so the loop is seamless.
+const groups = [0, 1];
+---
+
+<div class="border-t border-rule py-5" role="group" aria-label={label}>
+  <div class="overflow-hidden">
+    <p class="sr-only">{config.logos.join(", ")}</p>
+    <div class="marquee-track" aria-hidden="true">
+      {groups.map(() => (
+        <ul class="flex shrink-0 items-center">
+          {[...config.logos, ...config.logos].map((name) => (
+            <li class="font-display whitespace-nowrap px-8 text-[1.375rem] font-medium italic text-muted md:px-12">{name}</li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</div>

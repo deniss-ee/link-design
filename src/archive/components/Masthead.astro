@@ -1,0 +1,47 @@
+---
+import type { Copy } from "../i18n.en";
+import { config } from "../config";
+interface Props { t: Copy }
+const { t } = Astro.props;
+---
+
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-ink focus:px-3 focus:py-2 focus:text-paper"
+>{t.ui.skip}</a>
+
+<header class="rule-bottom bg-paper md:sticky md:top-0 md:z-50">
+  <div class="gutter grid items-center gap-x-6 gap-y-3 py-3 md:grid-cols-[1fr_auto_1fr]">
+    <div class="label label-ink flex flex-wrap gap-x-10">
+      <a href="#top" class="hover:text-accent">{config.name}</a>
+      <span class="text-muted">{t.masthead.issue}</span>
+    </div>
+
+    <nav aria-label="Primary" class="label label-ink flex flex-wrap gap-x-6 gap-y-1 md:justify-center">
+      {t.masthead.nav.map((item) => (
+        <a href={item.href} class="link-u">{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="label hidden justify-end gap-6 md:flex" aria-hidden="true">
+      <span data-clock data-tz={config.timeZone}></span>
+      <span>Tallinn {config.coordinates}</span>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Live Tallinn time. Purely decorative; page works without it.
+  const el = document.querySelector<HTMLElement>("[data-clock]");
+  if (el) {
+    const fmt = new Intl.DateTimeFormat("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: el.dataset.tz,
+    });
+    const tick = () => (el.textContent = fmt.format(new Date()));
+    tick();
+    setInterval(tick, 30_000);
+  }
+</script>

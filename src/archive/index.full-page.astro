@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Masthead from "./components/Masthead.astro";
+import Hero from "./components/Hero.astro";
+import Ticker from "./components/Ticker.astro";
+import Brief from "./components/Brief.astro";
+import Method from "./components/Method.astro";
+import Services from "./components/Services.astro";
+import Pricing from "./components/Pricing.astro";
+import SpecTable from "./components/SpecTable.astro";
+import WorkIndex from "./components/WorkIndex.astro";
+import Principles from "./components/Principles.astro";
+import Faq from "./components/Faq.astro";
+import SignOff from "./components/SignOff.astro";
+import Footer from "./components/Footer.astro";
+import { config } from "./config";
+import { en as t } from "./i18n.en";
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={t.lang}>
+  <Masthead t={t} />
+  <main id="main">
+    <Hero t={t} />
+    <Ticker t={t} />
+    <Brief t={t} />
+    <Method t={t} />
+    <Services t={t} />
+    <Pricing t={t} />
+    <SpecTable t={t} />
+    {config.showWork && <WorkIndex t={t} />}
+    <Principles t={t} />
+    <Faq t={t} />
+    <SignOff t={t} />
+  </main>
+  <Footer t={t} />
+</Layout>

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Archived sections must not generate CSS. */
+@source not "../archive";
+
 /* Self-hosted fonts via Fontsource (WOFF2, unicode-range subsets). */
 @import "@fontsource-variable/fraunces/wght.css";
 @import "@fontsource-variable/fraunces/wght-italic.css";
@@ -66,5 +69,25 @@
   }
   .link-u:hover {
     color: var(--color-accent);
+  }
+}
+
+/* Logo strip: CSS-only marquee, stopped for reduced motion. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
   }
 }

@@ -1,0 +1,41 @@
+---
+import type { Copy } from "../i18n/en";
+import { config } from "../data/config";
+interface Props { t: Copy }
+const { t } = Astro.props;
+const m = t.makes;
+const external = (url: string) => /^https?:\/\//.test(url);
+---
+
+<section id="work" class="gutter flex min-h-[100svh] items-center py-16 md:py-20">
+  <div class="w-full">
+    <h2 class="font-display text-[clamp(2.25rem,4.4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.025em]">{m.title}</h2>
+
+    <ul class="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
+      {m.items.map((item) => (
+        <li class="flex flex-col border-t border-ink pt-5">
+          <h3 class="font-display text-[1.5rem] font-medium leading-snug">{item.title}</h3>
+          <p class="mb-6 mt-2 text-[1.0625rem] leading-[1.5] text-muted">{item.text}</p>
+
+          {config.features.examples && (
+            <ul class="mt-auto border-t border-rule pt-0">
+              {item.examples.map((ex) => (
+                <li class="border-b border-rule">
+                  <a
+                    href={ex.url}
+                    target={external(ex.url) ? "_blank" : undefined}
+                    rel={external(ex.url) ? "noopener" : undefined}
+                    class="group flex items-baseline justify-between gap-3 py-3 text-[1rem] leading-snug hover:text-accent"
+                  >
+                    <span>{ex.title}</span>
+                    <span aria-hidden="true" class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">{t.ui.exampleSuffix}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Work from "../components/Work.astro";
+import Story from "../components/Story.astro";
+import Makes from "../components/Makes.astro";
 import Contact from "../components/Contact.astro";
 import { en as t } from "../i18n/en";
 ---
@@ -9,7 +10,8 @@ import { en as t } from "../i18n/en";
 <Layout title={t.meta.title} description={t.meta.description} lang={t.lang}>
   <main id="main">
     <Hero t={t} />
-    <Work t={t} />
+    <Story t={t} />
+    <Makes t={t} />
     <Contact t={t} />
   </main>
 </Layout>
