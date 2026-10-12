@@ -3,7 +3,15 @@
 Nothing removed from the site is deleted. It lives here, unused, ready to bring back.
 Files here are not imported by the site, not scanned by Tailwind and not type-checked.
 
-Git also keeps everything: `git show archive/v1-full-page:src/components/Pricing.astro`.
+Git also keeps everything, as tags:
+
+| Tag | What it holds |
+|---|---|
+| `archive/v1-full-page` | Original 12-section page |
+| `archive/v2-three-screens` | Three-screen, hourly-only version |
+| `archive/v3-four-screens` | Four screens before the move to data-driven blocks (components in `src/components/`) |
+
+Example: `git show archive/v1-full-page:src/components/Pricing.astro`.
 
 ## What is here
 

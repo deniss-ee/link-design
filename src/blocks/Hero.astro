@@ -1,0 +1,32 @@
+---
+// Block: hero. Data comes from the { type: "hero" } block in src/i18n/en.ts.
+import type { HeroBlock } from "../lib/types";
+import { config } from "../data/config";
+interface Props { block: HeroBlock }
+const { block } = Astro.props;
+const [l1, l2a, l2b] = block.title;
+const word = l2b.replace(/\.$/, "");
+---
+
+<section id={block.id} class="gutter flex min-h-[100svh] flex-col">
+  <header class="flex items-baseline justify-between py-6">
+    <a href={`#${block.id}`} class="font-display text-xl font-semibold tracking-[-0.01em]">{config.name}</a>
+    <a href={block.ctaHref} class="link-u text-base">{block.cta}</a>
+  </header>
+
+  <div class="flex flex-1 flex-col justify-center pb-24 pt-10">
+    <h1 class="font-display text-[clamp(3.5rem,11.5vw,10rem)] font-medium leading-[0.9] tracking-[-0.035em]">
+      <span class="block">{l1}</span>
+      <span class="block whitespace-nowrap">
+        <em class="font-normal">{l2a}</em>{" "}
+        <span class="underline decoration-rule decoration-1 underline-offset-[0.14em]">{word}</span>.
+      </span>
+    </h1>
+
+    <p class="mt-10 max-w-[34rem] text-[clamp(1.1875rem,1.8vw,1.4375rem)] leading-[1.45] text-muted">{block.sub}</p>
+
+    <a href={block.ctaHref} class="font-display mt-10 inline-block self-start text-[1.5rem] font-medium underline decoration-1 underline-offset-[0.3em] hover:text-accent">
+      {block.cta} →
+    </a>
+  </div>
+</section>

@@ -1,0 +1,154 @@
+---
+// Brief form. Delivered by Web3Forms (public access key, no secret in the page).
+// Works three ways:
+//   1. With JavaScript + key: sends in the background, shows the result inline.
+//   2. Without JavaScript + key: normal form POST to the endpoint.
+//   3. Without a key: opens the visitor's mail app with the brief filled in.
+import type { FormCopy } from "../lib/types";
+interface Props {
+  copy: FormCopy;
+  email: string;
+  endpoint: string;
+  accessKey: string;
+  privacyHref: string;
+}
+const { copy, email, endpoint, accessKey, privacyHref } = Astro.props;
+const hasKey = accessKey.length > 0;
+const field =
+  "mt-2 block w-full border-0 border-b border-paper/40 bg-transparent px-0 py-2 text-[1.0625rem] text-paper placeholder:text-paper/60 focus:border-accent-on-dark focus:outline-none focus:ring-0";
+const label = "text-[0.9375rem] text-paper/70";
+---
+
+<form
+  id="brief-form"
+  class="mt-8"
+  action={hasKey ? endpoint : `mailto:${email}`}
+  method="POST"
+  enctype={hasKey ? undefined : "text/plain"}
+  data-has-key={hasKey ? "true" : "false"}
+  data-endpoint={endpoint}
+  data-email={email}
+  data-subject={copy.emailSubject}
+  data-sending={copy.sending}
+  data-error={copy.errorText}
+>
+  {hasKey && <input type="hidden" name="access_key" value={accessKey} />}
+  <input type="hidden" name="subject" value={copy.emailSubject} />
+  <!-- Honeypot: humans never see or tick this. -->
+  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div data-fields>
+    <div class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+      <label class={label}>
+        {copy.nameLabel}
+        <input class={field} type="text" name="name" autocomplete="name" required />
+      </label>
+      <label class={label}>
+        {copy.emailLabel}
+        <input class={field} type="email" name="email" autocomplete="email" required />
+      </label>
+    </div>
+
+    <label class:list={[label, "mt-5 block"]}>
+      {copy.briefLabel}
+      <textarea class={field + " resize-y"} name="brief" rows="3" required placeholder={copy.briefPlaceholder}></textarea>
+    </label>
+
+    <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
+      <label class:list={[label, "min-w-[10rem] flex-1"]}>
+        {copy.deadlineLabel} <span class="text-paper/60">({copy.optional})</span>
+        <input class={field} type="text" name="deadline" placeholder={copy.deadlinePlaceholder} />
+      </label>
+      <button
+        type="submit"
+        class="font-display bg-paper px-7 py-3 text-[1.125rem] font-medium text-ink transition-colors hover:bg-accent-on-dark disabled:opacity-60"
+      >{copy.submit}</button>
+    </div>
+
+    <p class="mt-5 text-[0.9375rem] text-paper/60">
+      {copy.privacyNote} <a href={privacyHref} class="link-u inline-block py-1">{copy.privacyLink}</a>.
+    </p>
+  </div>
+
+  <!-- Result area: announced to screen readers, focused after success. -->
+  <div data-status role="status" aria-live="polite" tabindex="-1" class="outline-none"></div>
+  <template data-success>
+    <p class="font-display text-[1.75rem] font-medium leading-snug">{copy.successTitle}</p>
+    <p class="mt-2 text-paper/80">{copy.successText}</p>
+  </template>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#brief-form");
+  if (form) {
+    const status = form.querySelector<HTMLElement>("[data-status]")!;
+    const fields = form.querySelector<HTMLElement>("[data-fields]")!;
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const success = form.querySelector<HTMLTemplateElement>("template[data-success]")!;
+    const buttonText = button.textContent ?? "";
+    const { hasKey, endpoint, email, subject, sending, error } = {
+      hasKey: form.dataset.hasKey === "true",
+      endpoint: form.dataset.endpoint ?? "",
+      email: form.dataset.email ?? "",
+      subject: form.dataset.subject ?? "",
+      sending: form.dataset.sending ?? "",
+      error: form.dataset.error ?? "",
+    };
+
+    const showError = () => {
+      status.replaceChildren();
+      const p = document.createElement("p");
+      p.className = "mt-4 text-accent-on-dark";
+      p.append(`${error} `);
+      const a = document.createElement("a");
+      a.href = `mailto:${email}`;
+      a.className = "link-u";
+      a.textContent = email;
+      p.append(a);
+      status.append(p);
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const data = new FormData(form);
+      if (data.get("botcheck")) return; // honeypot ticked: silently drop
+
+      // No key configured: hand the brief to the visitor's mail app.
+      if (!hasKey) {
+        const body = [
+          `Name: ${data.get("name")}`,
+          `Email: ${data.get("email")}`,
+          `Deadline: ${data.get("deadline") || "-"}`,
+          "",
+          String(data.get("brief")),
+        ].join("\n");
+        location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = sending;
+      status.replaceChildren();
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: data,
+        });
+        const json = await res.json();
+        if (!res.ok || !json.success) throw new Error("rejected");
+        fields.hidden = true;
+        status.replaceChildren(success.content.cloneNode(true));
+        status.focus();
+      } catch {
+        showError();
+        button.disabled = false;
+        button.textContent = buttonText;
+      }
+    });
+  }
+</script>

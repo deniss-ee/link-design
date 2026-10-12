@@ -1,17 +1,30 @@
 ---
 import "../styles/global.css";
+import { config } from "../data/config";
 
 interface Props {
   title: string;
   description: string;
   lang?: string;
+  noindex?: boolean;
 }
-const { title, description, lang = "en" } = Astro.props;
+const { title, description, lang = "en", noindex = false } = Astro.props;
 
 // Staging must never be indexed. PUBLIC_SITE_ENV is set per Cloudflare project.
 const isDev = import.meta.env.PUBLIC_SITE_ENV === "dev";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og.png", Astro.site);
+
+// Optional cookieless visit stats (Cloudflare Web Analytics). Empty = off.
+const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN ?? "";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: config.name,
+  url: Astro.site?.toString(),
+  email: config.email,
+};
 ---
 
 <!doctype html>
@@ -22,17 +35,26 @@ const ogImage = new URL("/og.png", Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f6f2ea" />
-    {isDev && <meta name="robots" content="noindex, nofollow" />}
+    {(isDev || noindex) && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Link Design" />
+    <meta property="og:site_name" content={config.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {analyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+      ></script>
+    )}
   </head>
   <body>
     <slot />

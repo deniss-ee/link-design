@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { en as page } from "../i18n/en";
+import { config } from "../data/config";
+const n = page.notFound;
+---
+
+<Layout title={`${n.title} | ${config.name}`} description={n.text} lang={page.lang} noindex>
+  <main id="main" class="gutter flex min-h-[100svh] flex-col">
+    <header class="py-6">
+      <a href="/" class="font-display text-xl font-semibold tracking-[-0.01em]">{config.name}</a>
+    </header>
+    <div class="flex flex-1 flex-col justify-center pb-24">
+      <h1 class="font-display text-[clamp(3rem,9vw,7rem)] font-medium leading-[0.95] tracking-[-0.035em]">{n.title}</h1>
+      <p class="mt-6 max-w-[30rem] text-muted">{n.text}</p>
+      <a href="/" class="link-u font-display mt-8 inline-block self-start text-[1.5rem] font-medium">← {n.link}</a>
+    </div>
+  </main>
+</Layout>

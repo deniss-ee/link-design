@@ -1,0 +1,67 @@
+---
+// Block: price + contact (brief form). Dark screen, last on the page.
+import type { ContactBlock } from "../lib/types";
+import { config } from "../data/config";
+import ContactForm from "../components/ContactForm.astro";
+interface Props {
+  block: ContactBlock;
+  amount: string;
+  privacyHref: string;
+  privacyLabel: string;
+}
+const { block, amount, privacyHref, privacyLabel } = Astro.props;
+const p = block.price;
+const h = block.headline;
+const f = block.form;
+const year = new Date().getFullYear();
+// Public by design (Web3Forms). Set per Cloudflare project; empty = mail-app fallback.
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+if (!accessKey && import.meta.env.PROD) {
+  console.warn("[contact] PUBLIC_WEB3FORMS_KEY is not set: the form falls back to the visitor's mail app.");
+}
+---
+
+<section id={block.id} class="gutter flex min-h-[100svh] flex-col bg-ink text-paper">
+  <div class="grid flex-1 content-center gap-x-24 gap-y-16 py-16 md:grid-cols-2 md:py-20">
+    <div id="price">
+      <h2 class="font-display text-[clamp(2.25rem,4.4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.025em]">{p.title}</h2>
+      <p class="font-display mt-6 flex flex-wrap items-baseline gap-x-4 text-[clamp(4.5rem,9vw,7rem)] font-normal leading-none tracking-[-0.04em]">
+        {amount}
+        <span class="text-[clamp(1.25rem,2vw,1.75rem)] tracking-normal text-paper/70">{p.unit}</span>
+      </p>
+      <p class="mt-6 max-w-[28rem] text-paper/80">{p.lead}</p>
+      <ul class="mt-6 max-w-[28rem] border-t border-paper/25">
+        {p.terms.map((term) => (
+          <li class="border-b border-paper/25 py-2.5 text-[1.0625rem] text-paper/90">{term}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="md:pt-2">
+      <h2 class="font-display text-[clamp(2.25rem,4.3vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.03em]">
+        {h[0]}<br />{h[1]} <em class="font-normal text-accent-on-dark">{h[2]}</em><br />{h[3]}
+      </h2>
+
+      <ContactForm
+        copy={f}
+        email={config.email}
+        endpoint={config.form.endpoint}
+        accessKey={accessKey}
+        privacyHref={privacyHref}
+      />
+
+      <p class="mt-6 text-[0.9375rem] text-paper/70">
+        {f.direct}:{" "}
+        <a href={`mailto:${config.email}`} class="link-u inline-block py-1.5 text-paper">{config.email}</a>
+        {" · "}
+        <a href={config.telegram.url} rel="noopener" class="link-u inline-block py-1.5 text-paper">{config.telegram.handle}</a>
+      </p>
+    </div>
+  </div>
+
+  <footer class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-paper/25 py-6 text-[0.9375rem] text-paper/70">
+    <span>© {year} {config.legalEntity}</span>
+    <a href={privacyHref} class="link-u inline-block py-1.5">{privacyLabel}</a>
+    <span>{config.location}</span>
+  </footer>
+</section>

@@ -1,4 +1,4 @@
-// Site-wide settings. Edit values here, not in components.
+// Site-wide settings that are not page copy. Edit values here, not in components.
 export const config = {
   name: "Link Design",
   // Hourly rate in euros. The only price on the site.
@@ -6,19 +6,15 @@ export const config = {
   // Placeholder contacts: replace before production.
   email: "hello@link.design",
   telegram: { handle: "@linkdesign", url: "https://t.me/linkdesign" },
-  // Legal entity line shown in footer. Fill in when confirmed.
+  // Legal entity line shown in footer and privacy page. Fill in when confirmed.
   legalEntity: "Link Design",
   location: "Tallinn, Estonia",
 
-  // Switch parts of the page on or off. Nothing else needs to change.
-  features: {
-    // Scrolling strip of client wordmarks at the bottom of the story screen.
-    logos: true,
-    // Example links under each service on the "What Link makes" screen.
-    examples: true,
+  // Brief form. Delivery goes through Web3Forms, which emails each brief to you.
+  // The access key is public by design and comes from the environment:
+  //   PUBLIC_WEB3FORMS_KEY   (set in Cloudflare project settings, see README)
+  // Without a key the form falls back to opening the visitor's mail app.
+  form: {
+    endpoint: "https://api.web3forms.com/submit",
   },
-
-  // PLACEHOLDER wordmarks for the logo strip. Replace with real clients
-  // (with written permission) or turn the strip off with features.logos.
-  logos: ["Northwind", "Harbor & Co", "Lumen", "Fjord", "Atlas Foods", "Kivi", "Nordlane", "Polar"],
 } as const;

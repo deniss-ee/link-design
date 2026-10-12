@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { en as page } from "../i18n/en";
+import { config } from "../data/config";
+const p = page.privacy;
+---
+
+<Layout title={`${p.title} | ${config.name}`} description={p.sections[0]?.text ?? ""} lang={page.lang}>
+  <main id="main" class="gutter min-h-[100svh]">
+    <header class="py-6">
+      <a href="/" class="font-display text-xl font-semibold tracking-[-0.01em]">{config.name}</a>
+    </header>
+
+    <article class="max-w-[42rem] pb-24 pt-10">
+      <h1 class="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-[1] tracking-[-0.03em]">{p.title}</h1>
+      <p class="mt-4 text-muted">{p.updated}</p>
+
+      {p.sections.map((section) => (
+        <section class="mt-10 border-t border-rule pt-5">
+          <h2 class="font-display text-[1.5rem] font-medium leading-snug">{section.heading}</h2>
+          <p class="mt-2 text-muted">{section.text}</p>
+        </section>
+      ))}
+
+      <a href="/" class="link-u font-display mt-14 inline-block text-[1.25rem] font-medium">← {p.back}</a>
+    </article>
+  </main>
+</Layout>

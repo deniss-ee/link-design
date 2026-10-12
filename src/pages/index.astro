@@ -1,17 +1,42 @@
 ---
+// The page is a list of blocks defined in src/i18n/en.ts. Order and visibility
+// are controlled there. To add a new block type: create src/blocks/X.astro,
+// add its type to src/lib/types.ts, and add one `case` below.
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import Story from "../components/Story.astro";
-import Makes from "../components/Makes.astro";
-import Contact from "../components/Contact.astro";
-import { en as t } from "../i18n/en";
+import Hero from "../blocks/Hero.astro";
+import Story from "../blocks/Story.astro";
+import Makes from "../blocks/Makes.astro";
+import Contact from "../blocks/Contact.astro";
+import { en as page } from "../i18n/en";
+import { config } from "../data/config";
+
+const blocks = page.blocks.filter((b) => b.enabled !== false);
 ---
 
-<Layout title={t.meta.title} description={t.meta.description} lang={t.lang}>
+<Layout title={page.meta.title} description={page.meta.description} lang={page.lang}>
+  <a
+    href="#main"
+    class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper"
+  >{page.ui.skip}</a>
   <main id="main">
-    <Hero t={t} />
-    <Story t={t} />
-    <Makes t={t} />
-    <Contact t={t} />
+    {blocks.map((block) => {
+      switch (block.type) {
+        case "hero":
+          return <Hero block={block} />;
+        case "story":
+          return <Story block={block} />;
+        case "makes":
+          return <Makes block={block} suffix={page.ui.exampleSuffix} />;
+        case "contact":
+          return (
+            <Contact
+              block={block}
+              amount={String(config.rate)}
+              privacyHref={page.header.privacyHref}
+              privacyLabel={page.header.privacy}
+            />
+          );
+      }
+    })}
   </main>
 </Layout>
